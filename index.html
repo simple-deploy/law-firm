@@ -1,1377 +1,2155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hargreaves & Associates | Family & Property Law | Sydney, Australia</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0a1628;
-    --navy-mid: #12233f;
-    --gold: #c9a96e;
-    --gold-light: #e8c98a;
-    --cream: #f7f3ed;
-    --warm-white: #faf8f5;
-    --text-dark: #1a1a2e;
-    --text-mid: #4a4a6a;
-    --text-light: #8a8aaa;
-    --border: rgba(201,169,110,0.2);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--warm-white);
-    color: var(--text-dark);
-    overflow-x: hidden;
-  }
-
-  /* ── HEADER ── */
-  header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: rgba(10,22,40,0.97);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    transition: all 0.3s ease;
-  }
-
-  .header-inner {
-    max-width: 1300px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 40px; height: 80px;
-  }
-
-  .logo {
-    display: flex; flex-direction: column; cursor: pointer;
-  }
-  .logo-main {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem; color: var(--gold);
-    letter-spacing: 0.02em; font-weight: 600;
-  }
-  .logo-sub {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem; color: rgba(201,169,110,0.6);
-    letter-spacing: 0.18em; text-transform: uppercase;
-  }
-
-  nav { display: flex; align-items: center; gap: 6px; }
-
-  nav a {
-    font-size: 0.82rem; color: rgba(247,243,237,0.75);
-    text-decoration: none; padding: 8px 16px;
-    border-radius: 4px; letter-spacing: 0.06em;
-    text-transform: uppercase; font-weight: 500;
-    transition: all 0.25s ease; position: relative;
-  }
-  nav a:hover, nav a.active { color: var(--gold); }
-  nav a::after {
-    content: ''; position: absolute; bottom: 4px; left: 16px; right: 16px;
-    height: 1px; background: var(--gold); transform: scaleX(0);
-    transition: transform 0.25s ease;
-  }
-  nav a:hover::after, nav a.active::after { transform: scaleX(1); }
-
-  .nav-cta {
-    background: var(--gold); color: var(--navy) !important;
-    padding: 10px 22px !important; border-radius: 4px;
-    font-weight: 600 !important; margin-left: 8px;
-    transition: background 0.25s ease !important;
-  }
-  .nav-cta:hover { background: var(--gold-light) !important; }
-  .nav-cta::after { display: none !important; }
-
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
-  }
-  .hamburger span {
-    width: 24px; height: 2px; background: var(--gold); transition: all 0.3s ease;
-  }
-
-  /* ── PAGES ── */
-  .page { display: none; min-height: 100vh; }
-  .page.active { display: block; }
-
-  /* ── HERO ── */
-  .hero {
-    height: 100vh; position: relative; overflow: hidden;
-    display: flex; align-items: center;
-  }
-
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, #0a1628 0%, #12233f 50%, #0d1f38 100%);
-  }
-
-  .hero-img {
-    position: absolute; inset: 0; opacity: 0.18;
-    background-image: url('https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=1800&q=80');
-    background-size: cover; background-position: center;
-  }
-
-  .hero-pattern {
-    position: absolute; inset: 0; opacity: 0.04;
-    background-image: repeating-linear-gradient(
-      45deg, var(--gold) 0px, var(--gold) 1px,
-      transparent 1px, transparent 60px
-    );
-  }
-
-  .hero-content {
-    position: relative; z-index: 2;
-    max-width: 1300px; margin: 0 auto; padding: 0 40px;
-    padding-top: 80px;
-  }
-
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--border); padding: 8px 18px;
-    border-radius: 40px; margin-bottom: 32px;
-    animation: fadeUp 0.8s ease forwards;
-  }
-  .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
-  .hero-badge span {
-    font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em;
-    text-transform: uppercase; font-weight: 500;
-  }
-
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 6vw, 5.2rem);
-    color: var(--cream); line-height: 1.08;
-    font-weight: 700; max-width: 760px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.8s 0.1s ease both;
-  }
-  .hero-title em { color: var(--gold); font-style: italic; }
-
-  .hero-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem; color: rgba(247,243,237,0.65);
-    max-width: 520px; line-height: 1.7; font-weight: 300;
-    margin-bottom: 48px;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-
-  .hero-actions {
-    display: flex; gap: 16px; flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-
-  .btn-primary {
-    background: var(--gold); color: var(--navy);
-    padding: 16px 36px; border-radius: 4px;
-    font-size: 0.85rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    border: none; cursor: pointer;
-    transition: all 0.25s ease; text-decoration: none;
-    display: inline-block;
-  }
-  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-
-  .btn-outline {
-    background: transparent; color: var(--cream);
-    padding: 16px 36px; border-radius: 4px;
-    font-size: 0.85rem; font-weight: 500;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    border: 1px solid rgba(247,243,237,0.3); cursor: pointer;
-    transition: all 0.25s ease; text-decoration: none;
-    display: inline-block;
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-  .hero-stats {
-    position: absolute; bottom: 60px; right: 40px;
-    display: flex; gap: 48px;
-    animation: fadeUp 0.8s 0.4s ease both;
-  }
-  .stat { text-align: right; }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.4rem; color: var(--gold); font-weight: 700;
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.7rem; color: rgba(247,243,237,0.5);
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  .scroll-line {
-    position: absolute; bottom: 0; left: 50%;
-    width: 1px; height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--gold));
-    animation: scrollPulse 2s infinite;
-  }
-
-  /* ── SECTION SHARED ── */
-  section { padding: 100px 40px; }
-  .container { max-width: 1300px; margin: 0 auto; }
-
-  .section-label {
-    font-size: 0.7rem; color: var(--gold);
-    letter-spacing: 0.2em; text-transform: uppercase;
-    margin-bottom: 16px; font-weight: 600;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-label::before {
-    content: ''; width: 32px; height: 1px; background: var(--gold);
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    color: var(--navy); line-height: 1.15; font-weight: 700;
-  }
-  .section-title em { color: var(--gold); font-style: italic; }
-
-  .section-title.light { color: var(--cream); }
-
-  /* ── ABOUT (HOME) ── */
-  .about-split {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-  }
-
-  .about-image-wrap {
-    position: relative; border-radius: 4px; overflow: hidden;
-  }
-  .about-image-wrap::before {
-    content: ''; position: absolute;
-    top: -20px; left: -20px; right: 20px; bottom: 20px;
-    border: 1px solid var(--border); border-radius: 4px; z-index: 0;
-  }
-  .about-img {
-    width: 100%; height: 520px; object-fit: cover;
-    border-radius: 4px; position: relative; z-index: 1;
-    display: block;
-  }
-  .about-badge {
-    position: absolute; bottom: 32px; right: -24px; z-index: 2;
-    background: var(--gold); padding: 24px 28px; border-radius: 4px;
-    text-align: center;
-  }
-  .about-badge-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem; color: var(--navy); font-weight: 700; line-height: 1;
-  }
-  .about-badge-text {
-    font-size: 0.7rem; color: var(--navy-mid);
-    text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px;
-  }
-
-  .about-text .section-title { margin-bottom: 24px; }
-  .about-body {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem; color: var(--text-mid); line-height: 1.8;
-    margin-bottom: 32px; font-weight: 400;
-  }
-
-  .feature-list { list-style: none; margin-bottom: 40px; }
-  .feature-list li {
-    padding: 12px 0; border-bottom: 1px solid rgba(201,169,110,0.12);
-    display: flex; align-items: center; gap: 12px;
-    font-size: 0.9rem; color: var(--text-mid);
-  }
-  .feature-list li::before {
-    content: '✓'; color: var(--gold); font-weight: 700; font-size: 0.9rem;
-    width: 20px; flex-shrink: 0;
-  }
-
-  /* ── DARK SECTION ── */
-  .dark-section {
-    background: var(--navy);
-    position: relative; overflow: hidden;
-  }
-  .dark-section::before {
-    content: ''; position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1521791055366-0d553872952f?w=1600&q=60');
-    background-size: cover; background-position: center;
-    opacity: 0.06;
-  }
-
-  /* ── PRACTICE AREAS GRID ── */
-  .areas-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-    background: var(--border); border: 1px solid var(--border);
-    border-radius: 4px; overflow: hidden; margin-top: 60px;
-  }
-
-  .area-card {
-    background: var(--navy-mid); padding: 44px 36px;
-    transition: background 0.3s ease; cursor: pointer; position: relative;
-    overflow: hidden;
-  }
-  .area-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-    height: 3px; background: var(--gold); transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
-  .area-card:hover { background: rgba(201,169,110,0.05); }
-  .area-card:hover::after { transform: scaleX(1); }
-
-  .area-icon {
-    font-size: 2rem; margin-bottom: 20px; display: block;
-  }
-  .area-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem; color: var(--cream);
-    margin-bottom: 12px; font-weight: 600;
-  }
-  .area-card p {
-    font-size: 0.87rem; color: rgba(247,243,237,0.5);
-    line-height: 1.7;
-  }
-
-  /* ── TESTIMONIALS ── */
-  .testimonials-bg { background: var(--cream); }
-  .testimonials-grid {
-    display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 60px;
-  }
-  .testi-card {
-    background: white; padding: 40px 36px;
-    border-radius: 4px; border: 1px solid rgba(201,169,110,0.15);
-    position: relative;
-  }
-  .testi-card::before {
-    content: '\201C';
-    font-family: 'Playfair Display', serif;
-    font-size: 6rem; color: var(--gold); opacity: 0.15;
-    position: absolute; top: 10px; left: 28px;
-    line-height: 1;
-  }
-  .testi-stars { color: var(--gold); margin-bottom: 16px; font-size: 0.85rem; }
-  .testi-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem; color: var(--text-mid); line-height: 1.75;
-    margin-bottom: 24px; font-style: italic;
-  }
-  .testi-author { display: flex; align-items: center; gap: 14px; }
-  .testi-avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--gold); display: flex; align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif; color: var(--navy);
-    font-size: 1rem; font-weight: 700;
-  }
-  .testi-name { font-weight: 600; font-size: 0.88rem; color: var(--navy); }
-  .testi-loc { font-size: 0.75rem; color: var(--text-light); }
-
-  /* ── TEAM ── */
-  .team-grid {
-    display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 60px;
-  }
-  .team-card {
-    border-radius: 4px; overflow: hidden;
-    border: 1px solid rgba(201,169,110,0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .team-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
-  .team-img {
-    width: 100%; height: 300px; object-fit: cover; display: block;
-  }
-  .team-info { padding: 28px; background: white; }
-  .team-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem; color: var(--navy); font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .team-role { font-size: 0.8rem; color: var(--gold); text-transform: uppercase;
-    letter-spacing: 0.1em; margin-bottom: 12px; }
-  .team-bio { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; }
-
-  /* ── PAGE: WHY CHOOSE US ── */
-  .why-hero {
-    background: var(--navy); padding: 160px 40px 100px;
-    position: relative; overflow: hidden;
-  }
-  .why-hero::before {
-    content: ''; position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1600&q=60');
-    background-size: cover; opacity: 0.08;
-  }
-
-  .page-hero-content { position: relative; max-width: 1300px; margin: 0 auto; }
-  .page-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem); color: var(--cream);
-    font-weight: 700; line-height: 1.1; max-width: 700px;
-  }
-  .page-title em { color: var(--gold); font-style: italic; }
-  .page-subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; color: rgba(247,243,237,0.6);
-    margin-top: 20px; max-width: 560px; line-height: 1.7;
-  }
-
-  .why-pillars {
-    display: grid; grid-template-columns: repeat(2,1fr); gap: 2px;
-    background: var(--border); border: 1px solid var(--border);
-    border-radius: 4px; overflow: hidden; margin-top: 60px;
-  }
-  .pillar {
-    background: white; padding: 52px 48px;
-    transition: background 0.3s ease;
-  }
-  .pillar:hover { background: var(--cream); }
-  .pillar-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem; color: var(--gold); opacity: 0.3;
-    font-weight: 700; line-height: 1; margin-bottom: 8px;
-  }
-  .pillar h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem; color: var(--navy); font-weight: 600;
-    margin-bottom: 16px;
-  }
-  .pillar p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; }
-
-  .awards { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 60px; }
-  .award-badge {
-    flex: 1; min-width: 200px;
-    border: 1px solid var(--border); border-radius: 4px; padding: 32px 28px;
-    text-align: center;
-  }
-  .award-icon { font-size: 2.5rem; margin-bottom: 12px; }
-  .award-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem; color: var(--navy); font-weight: 600;
-  }
-  .award-body { font-size: 0.8rem; color: var(--text-light); margin-top: 6px; }
-
-  /* ── PAGE: SERVICES ── */
-  .services-hero {
-    background: linear-gradient(160deg, #0a1628 0%, #1a2a4a 100%);
-    padding: 160px 40px 100px; position: relative; overflow: hidden;
-  }
-  .services-hero::before {
-    content: ''; position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=60');
-    background-size: cover; opacity: 0.1;
-  }
-
-  .services-list { margin-top: 60px; }
-  .service-item {
-    display: grid; grid-template-columns: 80px 1fr 1fr; gap: 40px;
-    padding: 48px 0; border-bottom: 1px solid rgba(201,169,110,0.1);
-    align-items: start;
-    transition: all 0.3s ease;
-  }
-  .service-item:hover { padding-left: 12px; }
-  .service-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem; color: var(--gold); opacity: 0.4; font-weight: 700;
-    padding-top: 4px;
-  }
-  .service-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; color: var(--navy); font-weight: 600; margin-bottom: 12px;
-  }
-  .service-badge {
-    display: inline-block; font-size: 0.68rem; color: var(--gold);
-    border: 1px solid var(--border); padding: 4px 12px; border-radius: 40px;
-    letter-spacing: 0.1em; text-transform: uppercase;
-  }
-  .service-desc { font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; }
-  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-  .tag {
-    font-size: 0.75rem; background: var(--cream); color: var(--text-mid);
-    padding: 6px 14px; border-radius: 40px;
-  }
-
-  /* ── PAGE: BOOK APPOINTMENT ── */
-  .booking-hero {
-    background: var(--navy); padding: 160px 40px 80px; position: relative; overflow: hidden;
-  }
-  .booking-hero::before {
-    content: ''; position: absolute; inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1600&q=60');
-    background-size: cover; opacity: 0.08;
-  }
-
-  .booking-layout {
-    display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start;
-  }
-
-  .booking-info h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem; color: var(--navy); font-weight: 600; margin-bottom: 20px;
-  }
-  .booking-info p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 32px; }
-
-  .contact-detail {
-    display: flex; align-items: center; gap: 14px;
-    padding: 16px 0; border-bottom: 1px solid rgba(201,169,110,0.12);
-  }
-  .contact-icon { font-size: 1.2rem; color: var(--gold); width: 24px; text-align: center; }
-  .contact-text { font-size: 0.88rem; color: var(--text-mid); }
-  .contact-text strong { display: block; color: var(--navy); margin-bottom: 2px; }
-
-  .booking-form-wrap {
-    background: white; border-radius: 8px; padding: 52px;
-    border: 1px solid rgba(201,169,110,0.15);
-    box-shadow: 0 20px 80px rgba(0,0,0,0.06);
-  }
-  .form-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem; color: var(--navy); font-weight: 700; margin-bottom: 8px;
-  }
-  .form-subtitle { font-size: 0.85rem; color: var(--text-light); margin-bottom: 36px; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-  .form-group { margin-bottom: 20px; }
-  .form-group label {
-    display: block; font-size: 0.78rem; color: var(--text-mid);
-    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%; padding: 14px 16px;
-    border: 1px solid rgba(201,169,110,0.25);
-    border-radius: 4px; font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem; color: var(--text-dark);
-    background: var(--warm-white); outline: none;
-    transition: border-color 0.25s ease;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--gold);
-    background: white;
-  }
-  .form-group textarea { resize: vertical; min-height: 120px; }
-
-  .form-submit {
-    width: 100%; background: var(--navy); color: var(--cream);
-    padding: 18px; border: none; border-radius: 4px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-    font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-    cursor: pointer; transition: all 0.3s ease; margin-top: 8px;
-  }
-  .form-submit:hover { background: var(--gold); color: var(--navy); }
-
-  .success-msg {
-    display: none; text-align: center; padding: 40px;
-  }
-  .success-msg .checkmark { font-size: 3rem; color: var(--gold); margin-bottom: 16px; }
-  .success-msg h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; color: var(--navy); margin-bottom: 8px;
-  }
-  .success-msg p { font-size: 0.9rem; color: var(--text-mid); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--navy); padding: 80px 40px 40px;
-    border-top: 1px solid var(--border);
-  }
-
-  .footer-grid {
-    max-width: 1300px; margin: 0 auto;
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
-    padding-bottom: 60px; border-bottom: 1px solid var(--border);
-  }
-
-  .footer-brand .logo-main { font-size: 1.5rem; margin-bottom: 4px; }
-  .footer-brand p {
-    font-size: 0.85rem; color: rgba(247,243,237,0.45); line-height: 1.7;
-    margin-top: 16px; max-width: 280px;
-  }
-
-  .footer-col h4 {
-    font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em;
-    text-transform: uppercase; font-weight: 600; margin-bottom: 20px;
-  }
-  .footer-col a {
-    display: block; font-size: 0.85rem; color: rgba(247,243,237,0.5);
-    text-decoration: none; padding: 5px 0;
-    transition: color 0.2s ease;
-  }
-  .footer-col a:hover { color: var(--gold); }
-
-  .footer-bottom {
-    max-width: 1300px; margin: 0 auto;
-    display: flex; justify-content: space-between; align-items: center;
-    padding-top: 32px; font-size: 0.78rem; color: rgba(247,243,237,0.3);
-  }
-
-  /* ── CTA STRIP ── */
-  .cta-strip {
-    background: var(--gold); padding: 60px 40px; text-align: center;
-  }
-  .cta-strip h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem; color: var(--navy); font-weight: 700; margin-bottom: 12px;
-  }
-  .cta-strip p { color: var(--navy-mid); margin-bottom: 32px; opacity: 0.75; }
-  .btn-dark {
-    background: var(--navy); color: var(--cream);
-    padding: 16px 40px; border-radius: 4px;
-    font-size: 0.85rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    border: none; cursor: pointer; transition: all 0.25s ease;
-    display: inline-block; text-decoration: none;
-  }
-  .btn-dark:hover { background: var(--navy-mid); transform: translateY(-2px); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes scrollPulse {
-    0%,100% { opacity: 0.3; } 50% { opacity: 1; }
-  }
-
-  /* ── MOBILE ── */
-  @media(max-width: 900px) {
-    nav { display: none; }
-    .hamburger { display: flex; }
-    nav.open { display: flex; flex-direction: column; position: fixed;
-      top: 80px; left: 0; right: 0; background: var(--navy);
-      padding: 24px 40px; gap: 4px; border-top: 1px solid var(--border); }
-    nav.open a { padding: 12px 0; }
-    .hero-stats { display: none; }
-    .about-split { grid-template-columns: 1fr; gap: 40px; }
-    .about-badge { right: 0; }
-    .areas-grid { grid-template-columns: 1fr; }
-    .testimonials-grid { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: 1fr; }
-    .why-pillars { grid-template-columns: 1fr; }
-    .booking-layout { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .service-item { grid-template-columns: 1fr; }
-    .service-num { display: none; }
-    .form-row { grid-template-columns: 1fr; }
-    section { padding: 70px 24px; }
-    .hero-content { padding: 0 24px; }
-  }
-
-  /* Notice strip */
-  .notice-strip {
-    background: rgba(201,169,110,0.1); border-bottom: 1px solid var(--border);
-    padding: 10px 40px; display: flex; justify-content: center; align-items: center;
-    gap: 12px;
-  }
-  .notice-strip span { font-size: 0.78rem; color: var(--gold); letter-spacing: 0.05em; }
-</style>
-</head>
-<body>
-
-<!-- HEADER -->
-<header id="mainHeader">
-  <div class="header-inner">
-    <div class="logo" onclick="showPage('home')">
-      <div class="logo-main">Hargreaves & Associates</div>
-      <div class="logo-sub">Barristers & Solicitors · Est. 1987</div>
-    </div>
-    <nav id="mainNav">
-      <a href="#" class="active" onclick="showPage('home');return false;">Home</a>
-      <a href="#" onclick="showPage('why');return false;">Why Choose Us</a>
-      <a href="#" onclick="showPage('services');return false;">Services</a>
-      <a href="#" onclick="showPage('booking');return false;" class="nav-cta">Book Consultation</a>
-    </nav>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-</header>
-
-<!-- ═══════════════ PAGE: HOME ═══════════════ -->
-<div id="page-home" class="page active">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-img"></div>
-    <div class="hero-pattern"></div>
-    <div class="hero-content">
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        <span>Sydney · Melbourne · Brisbane · Canberra</span>
-      </div>
-      <h1 class="hero-title">
-        Trusted Legal Counsel<br>for <em>Every Chapter</em><br>of Your Life
-      </h1>
-      <p class="hero-desc">
-        Specialising in family law, property settlements, and financial agreements — we stand with Australians through life's most defining moments.
-      </p>
-      <div class="hero-actions">
-        <button class="btn-primary" onclick="showPage('booking')">Book a Free Consultation</button>
-        <button class="btn-outline" onclick="showPage('services')">Our Practice Areas</button>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">35+</div>
-        <div class="stat-label">Years of Practice</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">4,200+</div>
-        <div class="stat-label">Cases Resolved</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">98%</div>
-        <div class="stat-label">Client Satisfaction</div>
-      </div>
-    </div>
-    <div class="scroll-line"></div>
-  </section>
-
-  <!-- ABOUT -->
-  <section style="background:var(--warm-white); padding:100px 40px;">
-    <div class="container">
-      <div class="about-split">
-        <div class="about-image-wrap">
-          <img src="https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=900&q=80" alt="Law firm office" class="about-img">
-          <div class="about-badge">
-            <div class="about-badge-num">A+</div>
-            <div class="about-badge-text">Legal Service<br>Rating</div>
-          </div>
-        </div>
-        <div class="about-text">
-          <div class="section-label">About the Firm</div>
-          <h2 class="section-title">Principled. Precise.<br><em>Passionate</em> Advocacy.</h2>
-          <p class="about-body">
-            Founded in Sydney in 1987, Hargreaves & Associates has grown into one of Australia's most respected boutique law firms. We combine decades of courtroom experience with a deeply personal approach — because behind every case is a family, a home, or a future at stake.
-          </p>
-          <ul class="feature-list">
-            <li>Accredited Family Law Specialists (Law Society of NSW)</li>
-            <li>Property & Financial Agreement experts across all Australian states</li>
-            <li>Fixed-fee consultations with no hidden charges</li>
-            <li>Multilingual team — Mandarin, Arabic, and Greek services available</li>
-            <li>After-hours appointments available for urgent matters</li>
-          </ul>
-          <button class="btn-primary" onclick="showPage('why')">Why Choose Us</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRACTICE AREAS -->
-  <section class="dark-section">
-    <div class="container">
-      <div class="section-label" style="color:var(--gold)">Practice Areas</div>
-      <h2 class="section-title light" style="max-width:500px;">Every Matter.<br><em>Handled</em> with Expertise.</h2>
-      <div class="areas-grid">
-        <div class="area-card">
-          <span class="area-icon">⚖️</span>
-          <h3>Family Law</h3>
-          <p>Divorce, separation, parenting orders, and de facto relationships handled with sensitivity and strategic precision.</p>
-        </div>
-        <div class="area-card">
-          <span class="area-icon">🏠</span>
-          <h3>Property Settlements</h3>
-          <p>Protecting your assets with fair, court-approved property division and advice on jointly owned real estate.</p>
-        </div>
-        <div class="area-card">
-          <span class="area-icon">📋</span>
-          <h3>Financial Agreements</h3>
-          <p>Binding financial agreements (BFAs), prenuptial contracts, and post-separation financial planning.</p>
-        </div>
-        <div class="area-card">
-          <span class="area-icon">👶</span>
-          <h3>Child Custody</h3>
-          <p>Parenting plans, custody disputes, and child support matters — always prioritising the child's best interests.</p>
-        </div>
-        <div class="area-card">
-          <span class="area-icon">🛡️</span>
-          <h3>Domestic Violence Orders</h3>
-          <p>Urgent protection orders, AVOs, and safety planning for those in vulnerable situations.</p>
-        </div>
-        <div class="area-card">
-          <span class="area-icon">📝</span>
-          <h3>Estate Planning</h3>
-          <p>Wills, powers of attorney, and succession planning to secure your family's future with certainty.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section class="testimonials-bg">
-    <div class="container">
-      <div class="section-label">Client Testimonials</div>
-      <h2 class="section-title">Stories of <em>Trust & Resolution</em></h2>
-      <div class="testimonials-grid">
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">Hargreaves & Associates guided me through an incredibly difficult divorce with professionalism and genuine care. My settlement exceeded what I thought possible.</p>
-          <div class="testi-author">
-            <div class="testi-avatar">SR</div>
-            <div>
-              <div class="testi-name">Sarah R.</div>
-              <div class="testi-loc">Mosman, NSW</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">The property settlement was handled swiftly and fairly. I felt heard every step of the way. I cannot recommend this firm highly enough to anyone in NSW.</p>
-          <div class="testi-author">
-            <div class="testi-avatar">DL</div>
-            <div>
-              <div class="testi-name">David L.</div>
-              <div class="testi-loc">Parramatta, NSW</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">Their expertise in child custody law is unmatched. They secured a parenting plan that truly reflected my children's needs. Forever grateful.</p>
-          <div class="testi-author">
-            <div class="testi-avatar">MT</div>
-            <div>
-              <div class="testi-name">Michelle T.</div>
-              <div class="testi-loc">Chatswood, NSW</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TEAM -->
-  <section style="background:white; padding:100px 40px;">
-    <div class="container">
-      <div class="section-label">Our Solicitors</div>
-      <h2 class="section-title">Meet the <em>Team</em></h2>
-      <div class="team-grid">
-        <div class="team-card">
-          <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=600&q=80" alt="James Hargreaves" class="team-img">
-          <div class="team-info">
-            <div class="team-name">James Hargreaves</div>
-            <div class="team-role">Principal Solicitor · Family Law</div>
-            <div class="team-bio">35 years of experience in Australian family law. Accredited specialist with the Law Society of NSW and author of leading commentary on property settlements.</div>
-          </div>
-        </div>
-        <div class="team-card">
-          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Dr. Priya Mehta" class="team-img">
-          <div class="team-info">
-            <div class="team-name">Dr. Priya Mehta</div>
-            <div class="team-role">Senior Associate · Property Law</div>
-            <div class="team-bio">PhD in Property Law from the University of Sydney. Specialises in complex asset division, trust structures, and interstate property disputes.</div>
-          </div>
-        </div>
-        <div class="team-card">
-          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Tom Nguyen" class="team-img">
-          <div class="team-info">
-            <div class="team-name">Tom Nguyen</div>
-            <div class="team-role">Associate · Child Law & DVOs</div>
-            <div class="team-bio">Former barrister, now focused on child custody, parenting plans, and domestic violence protection orders across New South Wales courts.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA STRIP -->
-  <div class="cta-strip">
-    <h2>Ready to Talk to a Specialist?</h2>
-    <p>Your first 30-minute consultation is completely free and confidential.</p>
-    <button class="btn-dark" onclick="showPage('booking')">Book Your Free Consultation →</button>
-  </div>
-
-</div>
-<!-- /PAGE HOME -->
-
-
-<!-- ═══════════════ PAGE: WHY CHOOSE US ═══════════════ -->
-<div id="page-why" class="page">
-
-  <div class="why-hero">
-    <div class="page-hero-content">
-      <div class="section-label" style="color:var(--gold)">Why Hargreaves</div>
-      <h1 class="page-title">The Difference <em>Experience</em><br>& Integrity Make</h1>
-      <p class="page-subtitle">Choosing the right legal partner changes everything. Here's why thousands of Australians have trusted us with their most personal matters.</p>
-    </div>
-  </div>
-
-  <section style="background:white; padding:100px 40px;">
-    <div class="container">
-      <div class="section-label">Our Commitments</div>
-      <h2 class="section-title" style="margin-bottom:12px;">What Sets Us <em>Apart</em></h2>
-      <div class="why-pillars">
-        <div class="pillar">
-          <div class="pillar-num">01</div>
-          <h3>Accredited Family Law Specialists</h3>
-          <p>Not all solicitors are equal. Our principals hold formal accreditation from the Law Society of NSW — a distinction awarded to fewer than 5% of practising lawyers. This means deeper expertise and better outcomes for you.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">02</div>
-          <h3>Transparent, Fixed-Fee Pricing</h3>
-          <p>We believe in absolute cost clarity. Before any work begins, you'll receive a detailed cost agreement with fixed fees wherever possible — no surprise invoices, no billable-hour mysteries.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">03</div>
-          <h3>A Genuinely Personal Approach</h3>
-          <p>You'll always deal with a senior solicitor, never be passed to a paralegal. We limit our caseload deliberately so every client gets the attention they deserve — because your matter matters to us personally.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">04</div>
-          <h3>35 Years of Results</h3>
-          <p>Since 1987, we've successfully resolved over 4,200 matters — from simple wills to complex multi-jurisdictional property disputes. Our track record speaks with every file we close.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">05</div>
-          <h3>Australia-Wide Coverage</h3>
-          <p>With offices in Sydney, Melbourne, Brisbane, and Canberra, and extensive experience in Federal Circuit Court matters, we can advise and represent you wherever in Australia your matter arises.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">06</div>
-          <h3>After-Hours & Urgent Support</h3>
-          <p>Legal crises don't keep business hours. Our emergency line and after-hours appointments ensure you're never without support when you need it most — including weekends for DVO matters.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="dark-section" style="padding:80px 40px;">
-    <div class="container">
-      <div class="section-label" style="color:var(--gold)">Recognition</div>
-      <h2 class="section-title light" style="margin-bottom:40px;">Awards & <em>Accreditations</em></h2>
-      <div class="awards">
-        <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
-          <div class="award-icon">🏆</div>
-          <div class="award-title" style="color:var(--cream)">NSW Law Society</div>
-          <div class="award-body" style="color:rgba(247,243,237,0.5)">Family Law Specialist · Accredited 2003–Present</div>
-        </div>
-        <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
-          <div class="award-icon">⭐</div>
-          <div class="award-title" style="color:var(--cream)">Best Law Firm Sydney</div>
-          <div class="award-body" style="color:rgba(247,243,237,0.5)">Doyle's Guide — Family Law 2021, 2022, 2023</div>
-        </div>
-        <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
-          <div class="award-icon">🎖️</div>
-          <div class="award-title" style="color:var(--cream)">Legal 500 Asia Pacific</div>
-          <div class="award-body" style="color:rgba(247,243,237,0.5)">Tier 1 Family & Matrimonial · 2020–2024</div>
-        </div>
-        <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
-          <div class="award-icon">🤝</div>
-          <div class="award-title" style="color:var(--cream)">Pro Bono Commitment</div>
-          <div class="award-body" style="color:rgba(247,243,237,0.5)">Law Society Pro Bono Scheme Partner</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="cta-strip">
-    <h2>See the Difference for Yourself</h2>
-    <p>Book a free 30-minute consultation and meet the team that will fight for your future.</p>
-    <button class="btn-dark" onclick="showPage('booking')">Book Free Consultation →</button>
-  </div>
-
-</div>
-<!-- /PAGE WHY -->
-
-
-<!-- ═══════════════ PAGE: SERVICES ═══════════════ -->
-<div id="page-services" class="page">
-
-  <div class="services-hero">
-    <div class="page-hero-content">
-      <div class="section-label" style="color:var(--gold)">What We Do</div>
-      <h1 class="page-title">Specialist Legal Services<br>Across <em>All Areas</em> of Family &<br>Property Law</h1>
-      <p class="page-subtitle">We offer comprehensive, accredited legal services for individuals, families, and couples navigating Australia's family court system.</p>
-    </div>
-  </div>
-
-  <section style="background:white; padding:80px 40px;">
-    <div class="container">
-      <div class="services-list">
-
-        <div class="service-item">
-          <div class="service-num">01</div>
-          <div>
-            <div class="service-name">Family Law & Divorce</div>
-            <span class="service-badge">Most Popular</span>
-            <div class="service-tags" style="margin-top:12px;">
-              <span class="tag">Separation</span>
-              <span class="tag">Divorce Orders</span>
-              <span class="tag">De Facto Relationships</span>
-              <span class="tag">Mediation</span>
-            </div>
-          </div>
-          <div class="service-desc">
-            Navigating separation is emotionally and legally complex. We provide clear, strategic advice from the first meeting to final orders — covering marriage dissolution, de facto separations, and all interim arrangements. We prioritise out-of-court resolution wherever possible to save you time, cost, and distress.
-          </div>
-        </div>
-
-        <div class="service-item">
-          <div class="service-num">02</div>
-          <div>
-            <div class="service-name">Property Settlements</div>
-            <span class="service-badge">Complex Cases Welcome</span>
-            <div class="service-tags" style="margin-top:12px;">
-              <span class="tag">Asset Division</span>
-              <span class="tag">Superannuation Splitting</span>
-              <span class="tag">Business Interests</span>
-              <span class="tag">Interstate Property</span>
-            </div>
-          </div>
-          <div class="service-desc">
-            Australian property law requires careful valuation, negotiation, and court approval. Our specialists handle all asset classes — residential property, investment portfolios, self-managed super funds, family businesses, and offshore assets — ensuring you receive a fair and legally binding outcome.
-          </div>
-        </div>
-
-        <div class="service-item">
-          <div class="service-num">03</div>
-          <div>
-            <div class="service-name">Binding Financial Agreements</div>
-            <span class="service-badge">Prenups & Post-Nups</span>
-            <div class="service-tags" style="margin-top:12px;">
-              <span class="tag">Prenuptial Agreements</span>
-              <span class="tag">Post-Separation BFAs</span>
-              <span class="tag">Cohabitation Agreements</span>
-            </div>
-          </div>
-          <div class="service-desc">
-            A properly drafted Binding Financial Agreement (BFA) under the Family Law Act 1975 can protect your assets before marriage, during a relationship, or after separation. Our accredited specialists ensure your agreement is watertight and enforceable in any Australian court.
-          </div>
-        </div>
-
-        <div class="service-item">
-          <div class="service-num">04</div>
-          <div>
-            <div class="service-name">Child Custody & Parenting Plans</div>
-            <span class="service-badge">Child-First Approach</span>
-            <div class="service-tags" style="margin-top:12px;">
-              <span class="tag">Parenting Orders</span>
-              <span class="tag">Child Support</span>
-              <span class="tag">Relocation Applications</span>
-              <span class="tag">International Parenting</span>
-            </div>
-          </div>
-          <div class="service-desc">
-            We help parents establish clear, workable parenting arrangements that protect their children's wellbeing. From consent orders and parenting plans to contested custody hearings, we advocate firmly for outcomes that reflect the best interests of every child.
-          </div>
-        </div>
-
-        <div class="service-item">
-          <div class="service-num">05</div>
-          <div>
-            <div class="service-name">Domestic Violence & AVOs</div>
-            <span class="service-badge">Urgent Assistance Available</span>
-            <div class="service-tags" style="margin-top:12px;">
-              <span class="tag">Apprehended Violence Orders</span>
-              <span class="tag">Emergency Orders</span>
-              <span class="tag">Safety Planning</span>
-            </div>
-          </div>
-          <div class="service-desc">
-            Safety is paramount. We provide urgent representation for Apprehended Domestic Violence Orders (ADVOs), emergency protection orders, and safe exit planning. Our team can assist after hours and on weekends for immediate risk situations.
-          </div>
-        </div>
-
-        <div class="service-item">
-          <div class="service-num">06</div>
-          <div>
-            <div class="service-name">Wills & Estate Planning</div>
-            <span class="service-badge">Plan Ahead</span>
-            <div class="service-tags" style="margin-top:12px;">
-              <span class="tag">Wills</span>
-              <span class="tag">Powers of Attorney</span>
-              <span class="tag">Guardianship Orders</span>
-              <span class="tag">Probate</span>
-            </div>
-          </div>
-          <div class="service-desc">
-            Protect your family's future with a comprehensive estate plan. We draft legally robust wills, enduring powers of attorney, advance care directives, and administer estates through probate — giving your loved ones clarity and security.
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <div class="cta-strip">
-    <h2>Not Sure Which Service You Need?</h2>
-    <p>Book a free consultation and our specialists will guide you to the right solution.</p>
-    <button class="btn-dark" onclick="showPage('booking')">Book a Free Consultation →</button>
-  </div>
-
-</div>
-<!-- /PAGE SERVICES -->
-
-
-<!-- ═══════════════ PAGE: BOOK APPOINTMENT ═══════════════ -->
-<div id="page-booking" class="page">
-
-  <div class="booking-hero">
-    <div class="page-hero-content">
-      <div class="section-label" style="color:var(--gold)">Consultations</div>
-      <h1 class="page-title">Book Your <em>Free</em><br>30-Minute Consultation</h1>
-      <p class="page-subtitle">Confidential, obligation-free, and available in person, via phone, or video call. Our team will respond within 2 business hours.</p>
-    </div>
-  </div>
-
-  <section style="background:var(--cream); padding:100px 40px;">
-    <div class="container">
-      <div class="booking-layout">
-
-        <!-- INFO -->
-        <div class="booking-info">
-          <div class="section-label">Get in Touch</div>
-          <h3>We're Here<br>to Help You</h3>
-          <p>Whether you're facing separation, need a financial agreement, or simply want to understand your rights — our first conversation is always free and completely confidential.</p>
-
-          <div class="contact-detail">
-            <div class="contact-icon">📍</div>
-            <div class="contact-text">
-              <strong>Sydney Office</strong>
-              Level 22, 1 Macquarie Place, Sydney NSW 2000
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-icon">📞</div>
-            <div class="contact-text">
-              <strong>Main Line</strong>
-              (02) 9221 4400
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-icon">📧</div>
-            <div class="contact-text">
-              <strong>Email</strong>
-              enquiries@hargreaveslaw.com.au
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-icon">🕐</div>
-            <div class="contact-text">
-              <strong>Office Hours</strong>
-              Mon–Fri 8:30am–6:00pm · After-hours available
-            </div>
-          </div>
-          <div class="contact-detail">
-            <div class="contact-icon">🚨</div>
-            <div class="contact-text">
-              <strong>Urgent / DVO Matters</strong>
-              0400 221 440 (24/7)
-            </div>
-          </div>
-
-          <div style="margin-top:40px; padding:28px; background:white; border-radius:4px; border:1px solid rgba(201,169,110,0.2);">
-            <div style="font-size:0.75rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; font-weight:600; margin-bottom:10px;">Other Offices</div>
-            <div style="font-size:0.85rem; color:var(--text-mid); line-height:2;">
-              🏢 Melbourne — Collins St, VIC<br>
-              🏢 Brisbane — Eagle St, QLD<br>
-              🏢 Canberra — City Walk, ACT
-            </div>
-          </div>
-        </div>
-
-        <!-- FORM -->
-        <div class="booking-form-wrap">
-          <div id="formContent">
-            <div class="form-title">Request a Consultation</div>
-            <div class="form-subtitle">Complete the form below and we'll confirm your appointment within 2 business hours.</div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>First Name *</label>
-                <input type="text" id="firstName" placeholder="Jane">
-              </div>
-              <div class="form-group">
-                <label>Last Name *</label>
-                <input type="text" id="lastName" placeholder="Smith">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Email Address *</label>
-              <input type="email" id="email" placeholder="jane.smith@email.com">
-            </div>
-
-            <div class="form-group">
-              <label>Phone Number</label>
-              <input type="tel" id="phone" placeholder="04XX XXX XXX">
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Area of Law *</label>
-                <select id="legalArea">
-                  <option value="">Select a service…</option>
-                  <option>Family Law & Divorce</option>
-                  <option>Property Settlement</option>
-                  <option>Binding Financial Agreement</option>
-                  <option>Child Custody & Parenting</option>
-                  <option>Domestic Violence / AVO</option>
-                  <option>Wills & Estate Planning</option>
-                  <option>Other / Unsure</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Preferred Office</label>
-                <select id="office">
-                  <option>Sydney (CBD)</option>
-                  <option>Melbourne (CBD)</option>
-                  <option>Brisbane (CBD)</option>
-                  <option>Canberra</option>
-                  <option>Phone / Video Call</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Preferred Date</label>
-                <input type="date" id="prefDate">
-              </div>
-              <div class="form-group">
-                <label>Preferred Time</label>
-                <select id="prefTime">
-                  <option>Morning (8:30am–12pm)</option>
-                  <option>Afternoon (12pm–5pm)</option>
-                  <option>Evening (5pm–7pm)</option>
-                  <option>Weekend</option>
-                  <option>Flexible</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Consultation Type</label>
-              <select id="consultType">
-                <option>In Person</option>
-                <option>Video Call (Zoom/Teams)</option>
-                <option>Phone Call</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Brief Description of Your Matter</label>
-              <textarea id="matter" placeholder="Please share a brief overview of your situation (completely confidential)…"></textarea>
-            </div>
-
-            <div style="font-size:0.75rem; color:var(--text-light); margin-bottom:20px; line-height:1.6;">
-              🔒 Your information is protected under strict legal professional privilege and will never be shared. By submitting, you agree to our <span style="color:var(--gold); cursor:pointer;">Privacy Policy</span>.
-            </div>
-
-            <button class="form-submit" onclick="submitForm()">
-              Request Consultation — Free & Confidential
-            </button>
-          </div>
-
-          <div class="success-msg" id="successMsg">
-            <div class="checkmark">✅</div>
-            <h3>Consultation Request Received</h3>
-            <p>Thank you! A senior solicitor from Hargreaves & Associates will contact you within 2 business hours to confirm your appointment.</p>
-            <br>
-            <p style="font-size:0.8rem; color:var(--text-light);">For urgent matters, please call <strong>(02) 9221 4400</strong> directly.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-</div>
-<!-- /PAGE BOOKING -->
-
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo-main" style="color:var(--gold)">Hargreaves & Associates</div>
-      <div class="logo-sub" style="color:rgba(201,169,110,0.4); font-family:'Cormorant Garamond',serif; font-size:0.78rem; letter-spacing:0.12em;">Barristers & Solicitors · Est. 1987</div>
-      <p>Trusted legal counsel for Australian families since 1987. Specialising in family law, property settlements, and financial agreements.</p>
-      <div style="margin-top:24px; display:flex; gap:12px;">
-        <div style="width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);">in</div>
-        <div style="width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);">f</div>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <a href="#" onclick="showPage('services');return false;">Family Law</a>
-      <a href="#" onclick="showPage('services');return false;">Property Settlements</a>
-      <a href="#" onclick="showPage('services');return false;">Financial Agreements</a>
-      <a href="#" onclick="showPage('services');return false;">Child Custody</a>
-      <a href="#" onclick="showPage('services');return false;">DVOs & AVOs</a>
-      <a href="#" onclick="showPage('services');return false;">Estate Planning</a>
-    </div>
-    <div class="footer-col">
-      <h4>The Firm</h4>
-      <a href="#" onclick="showPage('home');return false;">About Us</a>
-      <a href="#" onclick="showPage('why');return false;">Why Choose Us</a>
-      <a href="#" onclick="showPage('home');return false;">Our Team</a>
-      <a href="#" onclick="showPage('home');return false;">Testimonials</a>
-      <a href="#">Costs & Fees</a>
-      <a href="#">Legal Resources</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="#">Sydney: (02) 9221 4400</a>
-      <a href="#">Melbourne: (03) 9641 6600</a>
-      <a href="#">Brisbane: (07) 3012 8800</a>
-      <a href="#">enquiries@hargreaveslaw.com.au</a>
-      <a href="#" onclick="showPage('booking');return false;">Book Consultation</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div>© 2024 Hargreaves & Associates Pty Ltd. All rights reserved. ABN 52 001 234 567</div>
-    <div style="display:flex;gap:24px;">
-      <a href="#" style="color:rgba(247,243,237,0.3);text-decoration:none;">Privacy</a>
-      <a href="#" style="color:rgba(247,243,237,0.3);text-decoration:none;">Terms</a>
-      <a href="#" style="color:rgba(247,243,237,0.3);text-decoration:none;">Disclaimer</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  function showPage(name) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // Update nav active state
-    const map = { home: 0, why: 1, services: 2, booking: 3 };
-    const links = document.querySelectorAll('nav a');
-    if (map[name] !== undefined) {
-      links[map[name]].classList.add('active');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hargreaves & Associates | Family & Property Law | Sydney, Australia</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #12233f;
+      --gold: #c9a96e;
+      --gold-light: #e8c98a;
+      --cream: #f7f3ed;
+      --warm-white: #faf8f5;
+      --text-dark: #1a1a2e;
+      --text-mid: #4a4a6a;
+      --text-light: #8a8aaa;
+      --border: rgba(201, 169, 110, 0.2);
     }
 
-    // Close mobile menu
-    document.getElementById('mainNav').classList.remove('open');
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  function toggleMenu() {
-    document.getElementById('mainNav').classList.toggle('open');
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  function submitForm() {
-    const firstName = document.getElementById('firstName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const legalArea = document.getElementById('legalArea').value;
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
 
-    if (!firstName) { alert('Please enter your first name.'); return; }
-    if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
-    if (!legalArea) { alert('Please select an area of law.'); return; }
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10, 22, 40, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
 
-    document.getElementById('formContent').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-  }
+    .header-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 80px;
+    }
 
-  // Set min date for date picker
-  const dateInput = document.getElementById('prefDate');
-  if (dateInput) {
-    const today = new Date();
-    today.setDate(today.getDate() + 1);
-    dateInput.min = today.toISOString().split('T')[0];
-  }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
 
-  // Scroll shadow on header
-  window.addEventListener('scroll', () => {
-    const h = document.getElementById('mainHeader');
-    h.style.boxShadow = window.scrollY > 20 ? '0 4px 40px rgba(0,0,0,0.3)' : 'none';
-  });
-</script>
+    .logo-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      font-weight: 600;
+    }
+
+    .logo-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      color: rgba(201, 169, 110, 0.6);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav a {
+      font-size: 0.82rem;
+      color: rgba(247, 243, 237, 0.75);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--gold);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 16px;
+      right: 16px;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 10px 22px !important;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      margin-left: 8px;
+      transition: background 0.25s ease !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-light) !important;
+    }
+
+    .nav-cta::after {
+      display: none !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      transition: all 0.3s ease;
+    }
+
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0a1628 0%, #12233f 50%, #0d1f38 100%);
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      opacity: 0.18;
+      background-image: url('https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: repeating-linear-gradient(45deg, var(--gold) 0px, var(--gold) 1px,
+          transparent 1px, transparent 60px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 40px;
+      padding-top: 80px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      padding: 8px 18px;
+      border-radius: 40px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .hero-badge span {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      color: var(--cream);
+      line-height: 1.08;
+      font-weight: 700;
+      max-width: 760px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    .hero-title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: rgba(247, 243, 237, 0.65);
+      max-width: 520px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 48px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 16px 36px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      padding: 16px 36px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(247, 243, 237, 0.3);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 60px;
+      right: 40px;
+      display: flex;
+      gap: 48px;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--gold);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: rgba(247, 243, 237, 0.5);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .scroll-line {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 100px 40px;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--navy);
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    .section-title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .section-title.light {
+      color: var(--cream);
+    }
+
+    /* ── ABOUT (HOME) ── */
+    .about-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .about-image-wrap::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: 20px;
+      bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      z-index: 0;
+    }
+
+    .about-img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 4px;
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: 32px;
+      right: -24px;
+      z-index: 2;
+      background: var(--gold);
+      padding: 24px 28px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--navy);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .about-badge-text {
+      font-size: 0.7rem;
+      color: var(--navy-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    .about-text .section-title {
+      margin-bottom: 24px;
+    }
+
+    .about-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--text-mid);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .feature-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.9rem;
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ── DARK SECTION ── */
+    .dark-section {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dark-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1521791055366-0d553872952f?w=1600&q=60');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.06;
+    }
+
+    /* ── PRACTICE AREAS GRID ── */
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+
+    .area-card {
+      background: var(--navy-mid);
+      padding: 44px 36px;
+      transition: background 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .area-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .area-card:hover {
+      background: rgba(201, 169, 110, 0.05);
+    }
+
+    .area-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .area-icon {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .area-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--cream);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .area-card p {
+      font-size: 0.87rem;
+      color: rgba(247, 243, 237, 0.5);
+      line-height: 1.7;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-bg {
+      background: var(--cream);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 60px;
+    }
+
+    .testi-card {
+      background: white;
+      padding: 40px 36px;
+      border-radius: 4px;
+      border: 1px solid rgba(201, 169, 110, 0.15);
+      position: relative;
+    }
+
+    .testi-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 6rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: 10px;
+      left: 28px;
+      line-height: 1;
+    }
+
+    .testi-stars {
+      color: var(--gold);
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+    }
+
+    .testi-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .testi-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      color: var(--navy);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .testi-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--navy);
+    }
+
+    .testi-loc {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+
+    /* ── TEAM ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+    }
+
+    .team-card {
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 169, 110, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    }
+
+    .team-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .team-info {
+      padding: 28px;
+      background: white;
+    }
+
+    .team-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .team-role {
+      font-size: 0.8rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .team-bio {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    /* ── PAGE: WHY CHOOSE US ── */
+    .why-hero {
+      background: var(--navy);
+      padding: 160px 40px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1600&q=60');
+      background-size: cover;
+      opacity: 0.08;
+    }
+
+    .page-hero-content {
+      position: relative;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--cream);
+      font-weight: 700;
+      line-height: 1.1;
+      max-width: 700px;
+    }
+
+    .page-title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .page-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: rgba(247, 243, 237, 0.6);
+      margin-top: 20px;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .why-pillars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+
+    .pillar {
+      background: white;
+      padding: 52px 48px;
+      transition: background 0.3s ease;
+    }
+
+    .pillar:hover {
+      background: var(--cream);
+    }
+
+    .pillar-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      opacity: 0.3;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .pillar h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .pillar p {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+    }
+
+    .awards {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 60px;
+    }
+
+    .award-badge {
+      flex: 1;
+      min-width: 200px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px 28px;
+      text-align: center;
+    }
+
+    .award-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .award-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .award-body {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 6px;
+    }
+
+    /* ── PAGE: SERVICES ── */
+    .services-hero {
+      background: linear-gradient(160deg, #0a1628 0%, #1a2a4a 100%);
+      padding: 160px 40px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .services-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=60');
+      background-size: cover;
+      opacity: 0.1;
+    }
+
+    .services-list {
+      margin-top: 60px;
+    }
+
+    .service-item {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      gap: 40px;
+      padding: 48px 0;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+      align-items: start;
+      transition: all 0.3s ease;
+    }
+
+    .service-item:hover {
+      padding-left: 12px;
+    }
+
+    .service-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      opacity: 0.4;
+      font-weight: 700;
+      padding-top: 4px;
+    }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .service-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 40px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      background: var(--cream);
+      color: var(--text-mid);
+      padding: 6px 14px;
+      border-radius: 40px;
+    }
+
+    /* ── PAGE: BOOK APPOINTMENT ── */
+    .booking-hero {
+      background: var(--navy);
+      padding: 160px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .booking-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1600&q=60');
+      background-size: cover;
+      opacity: 0.08;
+    }
+
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .booking-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .booking-info p {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+    }
+
+    .contact-icon {
+      font-size: 1.2rem;
+      color: var(--gold);
+      width: 24px;
+      text-align: center;
+    }
+
+    .contact-text {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+    }
+
+    .contact-text strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    .booking-form-wrap {
+      background: white;
+      border-radius: 8px;
+      padding: 52px;
+      border: 1px solid rgba(201, 169, 110, 0.15);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.06);
+    }
+
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--navy);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .form-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 36px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid rgba(201, 169, 110, 0.25);
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      background: var(--warm-white);
+      outline: none;
+      transition: border-color 0.25s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: white;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--navy);
+      color: var(--cream);
+      padding: 18px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+    }
+
+    .form-submit:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .success-msg .checkmark {
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .success-msg h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .success-msg p {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 80px 40px 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-brand .logo-main {
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: rgba(247, 243, 237, 0.45);
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.85rem;
+      color: rgba(247, 243, 237, 0.5);
+      text-decoration: none;
+      padding: 5px 0;
+      transition: color 0.2s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      font-size: 0.78rem;
+      color: rgba(247, 243, 237, 0.3);
+    }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      background: var(--gold);
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .cta-strip h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--navy);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .cta-strip p {
+      color: var(--navy-mid);
+      margin-bottom: 32px;
+      opacity: 0.75;
+    }
+
+    .btn-dark {
+      background: var(--navy);
+      color: var(--cream);
+      padding: 16px 40px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .btn-dark:hover {
+      background: var(--navy-mid);
+      transform: translateY(-2px);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* ── MOBILE ── */
+    @media(max-width: 900px) {
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      nav.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: var(--navy);
+        padding: 24px 40px;
+        gap: 4px;
+        border-top: 1px solid var(--border);
+      }
+
+      nav.open a {
+        padding: 12px 0;
+      }
+
+      .hero-stats {
+        display: none;
+      }
+
+      .about-split {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .about-badge {
+        right: 0;
+      }
+
+      .areas-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .service-item {
+        grid-template-columns: 1fr;
+      }
+
+      .service-num {
+        display: none;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 70px 24px;
+      }
+
+      .hero-content {
+        padding: 0 24px;
+      }
+    }
+
+    /* Notice strip */
+    .notice-strip {
+      background: rgba(201, 169, 110, 0.1);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .notice-strip span {
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header id="mainHeader">
+    <div class="header-inner">
+      <div class="logo" onclick="showPage('home')">
+        <div class="logo-main">Hargreaves & Associates</div>
+        <div class="logo-sub">Barristers & Solicitors · Est. 1987</div>
+      </div>
+      <nav id="mainNav">
+        <a href="#" class="active" onclick="showPage('home');return false;">Home</a>
+        <a href="#" onclick="showPage('why');return false;">Why Choose Us</a>
+        <a href="#" onclick="showPage('services');return false;">Services</a>
+        <a href="#" onclick="showPage('booking');return false;" class="nav-cta">Book Consultation</a>
+      </nav>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════ PAGE: HOME ═══════════════ -->
+  <div id="page-home" class="page active">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-img"></div>
+      <div class="hero-pattern"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          <span>Sydney · Melbourne · Brisbane · Canberra</span>
+        </div>
+        <h1 class="hero-title">
+          Trusted Legal Counsel<br>for <em>Every Chapter</em><br>of Your Life
+        </h1>
+        <p class="hero-desc">
+          Specialising in family law, property settlements, and financial agreements — we stand with Australians through
+          life's most defining moments.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showPage('booking')">Book a Free Consultation</button>
+          <button class="btn-outline" onclick="showPage('services')">Our Practice Areas</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">35+</div>
+          <div class="stat-label">Years of Practice</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4,200+</div>
+          <div class="stat-label">Cases Resolved</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+      </div>
+      <div class="scroll-line"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section style="background:var(--warm-white); padding:100px 40px;">
+      <div class="container">
+        <div class="about-split">
+          <div class="about-image-wrap">
+            <img src="https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=900&q=80" alt="Law firm office"
+              class="about-img">
+            <div class="about-badge">
+              <div class="about-badge-num">A+</div>
+              <div class="about-badge-text">Legal Service<br>Rating</div>
+            </div>
+          </div>
+          <div class="about-text">
+            <div class="section-label">About the Firm</div>
+            <h2 class="section-title">Principled. Precise.<br><em>Passionate</em> Advocacy.</h2>
+            <p class="about-body">
+              Founded in Sydney in 1987, Hargreaves & Associates has grown into one of Australia's most respected
+              boutique law firms. We combine decades of courtroom experience with a deeply personal approach — because
+              behind every case is a family, a home, or a future at stake.
+            </p>
+            <ul class="feature-list">
+              <li>Accredited Family Law Specialists (Law Society of NSW)</li>
+              <li>Property & Financial Agreement experts across all Australian states</li>
+              <li>Fixed-fee consultations with no hidden charges</li>
+              <li>Multilingual team — Mandarin, Arabic, and Greek services available</li>
+              <li>After-hours appointments available for urgent matters</li>
+            </ul>
+            <button class="btn-primary" onclick="showPage('why')">Why Choose Us</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICE AREAS -->
+    <section class="dark-section">
+      <div class="container">
+        <div class="section-label" style="color:var(--gold)">Practice Areas</div>
+        <h2 class="section-title light" style="max-width:500px;">Every Matter.<br><em>Handled</em> with Expertise.</h2>
+        <div class="areas-grid">
+          <div class="area-card">
+            <span class="area-icon">⚖️</span>
+            <h3>Family Law</h3>
+            <p>Divorce, separation, parenting orders, and de facto relationships handled with sensitivity and strategic
+              precision.</p>
+          </div>
+          <div class="area-card">
+            <span class="area-icon">🏠</span>
+            <h3>Property Settlements</h3>
+            <p>Protecting your assets with fair, court-approved property division and advice on jointly owned real
+              estate.</p>
+          </div>
+          <div class="area-card">
+            <span class="area-icon">📋</span>
+            <h3>Financial Agreements</h3>
+            <p>Binding financial agreements (BFAs), prenuptial contracts, and post-separation financial planning.</p>
+          </div>
+          <div class="area-card">
+            <span class="area-icon">👶</span>
+            <h3>Child Custody</h3>
+            <p>Parenting plans, custody disputes, and child support matters — always prioritising the child's best
+              interests.</p>
+          </div>
+          <div class="area-card">
+            <span class="area-icon">🛡️</span>
+            <h3>Domestic Violence Orders</h3>
+            <p>Urgent protection orders, AVOs, and safety planning for those in vulnerable situations.</p>
+          </div>
+          <div class="area-card">
+            <span class="area-icon">📝</span>
+            <h3>Estate Planning</h3>
+            <p>Wills, powers of attorney, and succession planning to secure your family's future with certainty.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-bg">
+      <div class="container">
+        <div class="section-label">Client Testimonials</div>
+        <h2 class="section-title">Stories of <em>Trust & Resolution</em></h2>
+        <div class="testimonials-grid">
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">Hargreaves & Associates guided me through an incredibly difficult divorce with
+              professionalism and genuine care. My settlement exceeded what I thought possible.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">SR</div>
+              <div>
+                <div class="testi-name">Sarah R.</div>
+                <div class="testi-loc">Mosman, NSW</div>
+              </div>
+            </div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">The property settlement was handled swiftly and fairly. I felt heard every step of the
+              way. I cannot recommend this firm highly enough to anyone in NSW.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">DL</div>
+              <div>
+                <div class="testi-name">David L.</div>
+                <div class="testi-loc">Parramatta, NSW</div>
+              </div>
+            </div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">Their expertise in child custody law is unmatched. They secured a parenting plan that
+              truly reflected my children's needs. Forever grateful.</p>
+            <div class="testi-author">
+              <div class="testi-avatar">MT</div>
+              <div>
+                <div class="testi-name">Michelle T.</div>
+                <div class="testi-loc">Chatswood, NSW</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section style="background:white; padding:100px 40px;">
+      <div class="container">
+        <div class="section-label">Our Solicitors</div>
+        <h2 class="section-title">Meet the <em>Team</em></h2>
+        <div class="team-grid">
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=600&q=80" alt="James Hargreaves"
+              class="team-img">
+            <div class="team-info">
+              <div class="team-name">James Hargreaves</div>
+              <div class="team-role">Principal Solicitor · Family Law</div>
+              <div class="team-bio">35 years of experience in Australian family law. Accredited specialist with the Law
+                Society of NSW and author of leading commentary on property settlements.</div>
+            </div>
+          </div>
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Dr. Priya Mehta"
+              class="team-img">
+            <div class="team-info">
+              <div class="team-name">Dr. Priya Mehta</div>
+              <div class="team-role">Senior Associate · Property Law</div>
+              <div class="team-bio">PhD in Property Law from the University of Sydney. Specialises in complex asset
+                division, trust structures, and interstate property disputes.</div>
+            </div>
+          </div>
+          <div class="team-card">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Tom Nguyen"
+              class="team-img">
+            <div class="team-info">
+              <div class="team-name">Tom Nguyen</div>
+              <div class="team-role">Associate · Child Law & DVOs</div>
+              <div class="team-bio">Former barrister, now focused on child custody, parenting plans, and domestic
+                violence protection orders across New South Wales courts.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA STRIP -->
+    <div class="cta-strip">
+      <h2>Ready to Talk to a Specialist?</h2>
+      <p>Your first 30-minute consultation is completely free and confidential.</p>
+      <button class="btn-dark" onclick="showPage('booking')">Book Your Free Consultation →</button>
+    </div>
+
+  </div>
+  <!-- /PAGE HOME -->
+
+
+  <!-- ═══════════════ PAGE: WHY CHOOSE US ═══════════════ -->
+  <div id="page-why" class="page">
+
+    <div class="why-hero">
+      <div class="page-hero-content">
+        <div class="section-label" style="color:var(--gold)">Why Hargreaves</div>
+        <h1 class="page-title">The Difference <em>Experience</em><br>& Integrity Make</h1>
+        <p class="page-subtitle">Choosing the right legal partner changes everything. Here's why thousands of
+          Australians have trusted us with their most personal matters.</p>
+      </div>
+    </div>
+
+    <section style="background:white; padding:100px 40px;">
+      <div class="container">
+        <div class="section-label">Our Commitments</div>
+        <h2 class="section-title" style="margin-bottom:12px;">What Sets Us <em>Apart</em></h2>
+        <div class="why-pillars">
+          <div class="pillar">
+            <div class="pillar-num">01</div>
+            <h3>Accredited Family Law Specialists</h3>
+            <p>Not all solicitors are equal. Our principals hold formal accreditation from the Law Society of NSW — a
+              distinction awarded to fewer than 5% of practising lawyers. This means deeper expertise and better
+              outcomes for you.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">02</div>
+            <h3>Transparent, Fixed-Fee Pricing</h3>
+            <p>We believe in absolute cost clarity. Before any work begins, you'll receive a detailed cost agreement
+              with fixed fees wherever possible — no surprise invoices, no billable-hour mysteries.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">03</div>
+            <h3>A Genuinely Personal Approach</h3>
+            <p>You'll always deal with a senior solicitor, never be passed to a paralegal. We limit our caseload
+              deliberately so every client gets the attention they deserve — because your matter matters to us
+              personally.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">04</div>
+            <h3>35 Years of Results</h3>
+            <p>Since 1987, we've successfully resolved over 4,200 matters — from simple wills to complex
+              multi-jurisdictional property disputes. Our track record speaks with every file we close.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">05</div>
+            <h3>Australia-Wide Coverage</h3>
+            <p>With offices in Sydney, Melbourne, Brisbane, and Canberra, and extensive experience in Federal Circuit
+              Court matters, we can advise and represent you wherever in Australia your matter arises.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">06</div>
+            <h3>After-Hours & Urgent Support</h3>
+            <p>Legal crises don't keep business hours. Our emergency line and after-hours appointments ensure you're
+              never without support when you need it most — including weekends for DVO matters.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section" style="padding:80px 40px;">
+      <div class="container">
+        <div class="section-label" style="color:var(--gold)">Recognition</div>
+        <h2 class="section-title light" style="margin-bottom:40px;">Awards & <em>Accreditations</em></h2>
+        <div class="awards">
+          <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
+            <div class="award-icon">🏆</div>
+            <div class="award-title" style="color:var(--cream)">NSW Law Society</div>
+            <div class="award-body" style="color:rgba(247,243,237,0.5)">Family Law Specialist · Accredited 2003–Present
+            </div>
+          </div>
+          <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
+            <div class="award-icon">⭐</div>
+            <div class="award-title" style="color:var(--cream)">Best Law Firm Sydney</div>
+            <div class="award-body" style="color:rgba(247,243,237,0.5)">Doyle's Guide — Family Law 2021, 2022, 2023
+            </div>
+          </div>
+          <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
+            <div class="award-icon">🎖️</div>
+            <div class="award-title" style="color:var(--cream)">Legal 500 Asia Pacific</div>
+            <div class="award-body" style="color:rgba(247,243,237,0.5)">Tier 1 Family & Matrimonial · 2020–2024</div>
+          </div>
+          <div class="award-badge" style="border-color:rgba(201,169,110,0.3)">
+            <div class="award-icon">🤝</div>
+            <div class="award-title" style="color:var(--cream)">Pro Bono Commitment</div>
+            <div class="award-body" style="color:rgba(247,243,237,0.5)">Law Society Pro Bono Scheme Partner</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-strip">
+      <h2>See the Difference for Yourself</h2>
+      <p>Book a free 30-minute consultation and meet the team that will fight for your future.</p>
+      <button class="btn-dark" onclick="showPage('booking')">Book Free Consultation →</button>
+    </div>
+
+  </div>
+  <!-- /PAGE WHY -->
+
+
+  <!-- ═══════════════ PAGE: SERVICES ═══════════════ -->
+  <div id="page-services" class="page">
+
+    <div class="services-hero">
+      <div class="page-hero-content">
+        <div class="section-label" style="color:var(--gold)">What We Do</div>
+        <h1 class="page-title">Specialist Legal Services<br>Across <em>All Areas</em> of Family &<br>Property Law</h1>
+        <p class="page-subtitle">We offer comprehensive, accredited legal services for individuals, families, and
+          couples navigating Australia's family court system.</p>
+      </div>
+    </div>
+
+    <section style="background:white; padding:80px 40px;">
+      <div class="container">
+        <div class="services-list">
+
+          <div class="service-item">
+            <div class="service-num">01</div>
+            <div>
+              <div class="service-name">Family Law & Divorce</div>
+              <span class="service-badge">Most Popular</span>
+              <div class="service-tags" style="margin-top:12px;">
+                <span class="tag">Separation</span>
+                <span class="tag">Divorce Orders</span>
+                <span class="tag">De Facto Relationships</span>
+                <span class="tag">Mediation</span>
+              </div>
+            </div>
+            <div class="service-desc">
+              Navigating separation is emotionally and legally complex. We provide clear, strategic advice from the
+              first meeting to final orders — covering marriage dissolution, de facto separations, and all interim
+              arrangements. We prioritise out-of-court resolution wherever possible to save you time, cost, and
+              distress.
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-num">02</div>
+            <div>
+              <div class="service-name">Property Settlements</div>
+              <span class="service-badge">Complex Cases Welcome</span>
+              <div class="service-tags" style="margin-top:12px;">
+                <span class="tag">Asset Division</span>
+                <span class="tag">Superannuation Splitting</span>
+                <span class="tag">Business Interests</span>
+                <span class="tag">Interstate Property</span>
+              </div>
+            </div>
+            <div class="service-desc">
+              Australian property law requires careful valuation, negotiation, and court approval. Our specialists
+              handle all asset classes — residential property, investment portfolios, self-managed super funds, family
+              businesses, and offshore assets — ensuring you receive a fair and legally binding outcome.
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-num">03</div>
+            <div>
+              <div class="service-name">Binding Financial Agreements</div>
+              <span class="service-badge">Prenups & Post-Nups</span>
+              <div class="service-tags" style="margin-top:12px;">
+                <span class="tag">Prenuptial Agreements</span>
+                <span class="tag">Post-Separation BFAs</span>
+                <span class="tag">Cohabitation Agreements</span>
+              </div>
+            </div>
+            <div class="service-desc">
+              A properly drafted Binding Financial Agreement (BFA) under the Family Law Act 1975 can protect your assets
+              before marriage, during a relationship, or after separation. Our accredited specialists ensure your
+              agreement is watertight and enforceable in any Australian court.
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-num">04</div>
+            <div>
+              <div class="service-name">Child Custody & Parenting Plans</div>
+              <span class="service-badge">Child-First Approach</span>
+              <div class="service-tags" style="margin-top:12px;">
+                <span class="tag">Parenting Orders</span>
+                <span class="tag">Child Support</span>
+                <span class="tag">Relocation Applications</span>
+                <span class="tag">International Parenting</span>
+              </div>
+            </div>
+            <div class="service-desc">
+              We help parents establish clear, workable parenting arrangements that protect their children's wellbeing.
+              From consent orders and parenting plans to contested custody hearings, we advocate firmly for outcomes
+              that reflect the best interests of every child.
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-num">05</div>
+            <div>
+              <div class="service-name">Domestic Violence & AVOs</div>
+              <span class="service-badge">Urgent Assistance Available</span>
+              <div class="service-tags" style="margin-top:12px;">
+                <span class="tag">Apprehended Violence Orders</span>
+                <span class="tag">Emergency Orders</span>
+                <span class="tag">Safety Planning</span>
+              </div>
+            </div>
+            <div class="service-desc">
+              Safety is paramount. We provide urgent representation for Apprehended Domestic Violence Orders (ADVOs),
+              emergency protection orders, and safe exit planning. Our team can assist after hours and on weekends for
+              immediate risk situations.
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-num">06</div>
+            <div>
+              <div class="service-name">Wills & Estate Planning</div>
+              <span class="service-badge">Plan Ahead</span>
+              <div class="service-tags" style="margin-top:12px;">
+                <span class="tag">Wills</span>
+                <span class="tag">Powers of Attorney</span>
+                <span class="tag">Guardianship Orders</span>
+                <span class="tag">Probate</span>
+              </div>
+            </div>
+            <div class="service-desc">
+              Protect your family's future with a comprehensive estate plan. We draft legally robust wills, enduring
+              powers of attorney, advance care directives, and administer estates through probate — giving your loved
+              ones clarity and security.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-strip">
+      <h2>Not Sure Which Service You Need?</h2>
+      <p>Book a free consultation and our specialists will guide you to the right solution.</p>
+      <button class="btn-dark" onclick="showPage('booking')">Book a Free Consultation →</button>
+    </div>
+
+  </div>
+  <!-- /PAGE SERVICES -->
+
+
+  <!-- ═══════════════ PAGE: BOOK APPOINTMENT ═══════════════ -->
+  <div id="page-booking" class="page">
+
+    <div class="booking-hero">
+      <div class="page-hero-content">
+        <div class="section-label" style="color:var(--gold)">Consultations</div>
+        <h1 class="page-title">Book Your <em>Free</em><br>30-Minute Consultation</h1>
+        <p class="page-subtitle">Confidential, obligation-free, and available in person, via phone, or video call. Our
+          team will respond within 2 business hours.</p>
+      </div>
+    </div>
+
+    <section style="background:var(--cream); padding:100px 40px;">
+      <div class="container">
+        <div class="booking-layout">
+
+          <!-- INFO -->
+          <div class="booking-info">
+            <div class="section-label">Get in Touch</div>
+            <h3>We're Here<br>to Help You</h3>
+            <p>Whether you're facing separation, need a financial agreement, or simply want to understand your rights —
+              our first conversation is always free and completely confidential.</p>
+
+            <div class="contact-detail">
+              <div class="contact-icon">📍</div>
+              <div class="contact-text">
+                <strong>Sydney Office</strong>
+                Level 22, 1 Macquarie Place, Sydney NSW 2000
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-icon">📞</div>
+              <div class="contact-text">
+                <strong>Main Line</strong>
+                (02) 9221 4400
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-icon">📧</div>
+              <div class="contact-text">
+                <strong>Email</strong>
+                enquiries@hargreaveslaw.com.au
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-icon">🕐</div>
+              <div class="contact-text">
+                <strong>Office Hours</strong>
+                Mon–Fri 8:30am–6:00pm · After-hours available
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="contact-icon">🚨</div>
+              <div class="contact-text">
+                <strong>Urgent / DVO Matters</strong>
+                0400 221 440 (24/7)
+              </div>
+            </div>
+
+            <div
+              style="margin-top:40px; padding:28px; background:white; border-radius:4px; border:1px solid rgba(201,169,110,0.2);">
+              <div
+                style="font-size:0.75rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; font-weight:600; margin-bottom:10px;">
+                Other Offices</div>
+              <div style="font-size:0.85rem; color:var(--text-mid); line-height:2;">
+                🏢 Melbourne — Collins St, VIC<br>
+                🏢 Brisbane — Eagle St, QLD<br>
+                🏢 Canberra — City Walk, ACT
+              </div>
+            </div>
+          </div>
+
+          <!-- FORM -->
+          <div class="booking-form-wrap">
+            <div id="formContent">
+              <div class="form-title">Request a Consultation</div>
+              <div class="form-subtitle">Complete the form below and we'll confirm your appointment within 2 business
+                hours.</div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name *</label>
+                  <input type="text" id="firstName" placeholder="Jane">
+                </div>
+                <div class="form-group">
+                  <label>Last Name *</label>
+                  <input type="text" id="lastName" placeholder="Smith">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Email Address *</label>
+                <input type="email" id="email" placeholder="jane.smith@email.com">
+              </div>
+
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="phone" placeholder="04XX XXX XXX">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Area of Law *</label>
+                  <select id="legalArea">
+                    <option value="">Select a service…</option>
+                    <option>Family Law & Divorce</option>
+                    <option>Property Settlement</option>
+                    <option>Binding Financial Agreement</option>
+                    <option>Child Custody & Parenting</option>
+                    <option>Domestic Violence / AVO</option>
+                    <option>Wills & Estate Planning</option>
+                    <option>Other / Unsure</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Preferred Office</label>
+                  <select id="office">
+                    <option>Sydney (CBD)</option>
+                    <option>Melbourne (CBD)</option>
+                    <option>Brisbane (CBD)</option>
+                    <option>Canberra</option>
+                    <option>Phone / Video Call</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Preferred Date</label>
+                  <input type="date" id="prefDate">
+                </div>
+                <div class="form-group">
+                  <label>Preferred Time</label>
+                  <select id="prefTime">
+                    <option>Morning (8:30am–12pm)</option>
+                    <option>Afternoon (12pm–5pm)</option>
+                    <option>Evening (5pm–7pm)</option>
+                    <option>Weekend</option>
+                    <option>Flexible</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Consultation Type</label>
+                <select id="consultType">
+                  <option>In Person</option>
+                  <option>Video Call (Zoom/Teams)</option>
+                  <option>Phone Call</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Brief Description of Your Matter</label>
+                <textarea id="matter"
+                  placeholder="Please share a brief overview of your situation (completely confidential)…"></textarea>
+              </div>
+
+              <div style="font-size:0.75rem; color:var(--text-light); margin-bottom:20px; line-height:1.6;">
+                🔒 Your information is protected under strict legal professional privilege and will never be shared. By
+                submitting, you agree to our <span style="color:var(--gold); cursor:pointer;">Privacy Policy</span>.
+              </div>
+
+              <button class="form-submit" onclick="submitForm()">
+                Request Consultation — Free & Confidential
+              </button>
+            </div>
+
+            <div class="success-msg" id="successMsg">
+              <div class="checkmark">✅</div>
+              <h3>Consultation Request Received</h3>
+              <p>Thank you! A senior solicitor from Hargreaves & Associates will contact you within 2 business hours to
+                confirm your appointment.</p>
+              <br>
+              <p style="font-size:0.8rem; color:var(--text-light);">For urgent matters, please call <strong>(02) 9221
+                  4400</strong> directly.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!-- /PAGE BOOKING -->
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-main" style="color:var(--gold)">Hargreaves & Associates</div>
+        <div class="logo-sub"
+          style="color:rgba(201,169,110,0.4); font-family:'Cormorant Garamond',serif; font-size:0.78rem; letter-spacing:0.12em;">
+          Barristers & Solicitors · Est. 1987</div>
+        <p>Trusted legal counsel for Australian families since 1987. Specialising in family law, property settlements,
+          and financial agreements.</p>
+        <div style="margin-top:24px; display:flex; gap:12px;">
+          <div
+            style="width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);">
+            in</div>
+          <div
+            style="width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);">
+            f</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#" onclick="showPage('services');return false;">Family Law</a>
+        <a href="#" onclick="showPage('services');return false;">Property Settlements</a>
+        <a href="#" onclick="showPage('services');return false;">Financial Agreements</a>
+        <a href="#" onclick="showPage('services');return false;">Child Custody</a>
+        <a href="#" onclick="showPage('services');return false;">DVOs & AVOs</a>
+        <a href="#" onclick="showPage('services');return false;">Estate Planning</a>
+      </div>
+      <div class="footer-col">
+        <h4>The Firm</h4>
+        <a href="#" onclick="showPage('home');return false;">About Us</a>
+        <a href="#" onclick="showPage('why');return false;">Why Choose Us</a>
+        <a href="#" onclick="showPage('home');return false;">Our Team</a>
+        <a href="#" onclick="showPage('home');return false;">Testimonials</a>
+        <a href="#">Costs & Fees</a>
+        <a href="#">Legal Resources</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="#">Sydney: (02) 9221 4400</a>
+        <a href="#">Melbourne: (03) 9641 6600</a>
+        <a href="#">Brisbane: (07) 3012 8800</a>
+        <a href="#">enquiries@hargreaveslaw.com.au</a>
+        <a href="#" onclick="showPage('booking');return false;">Book Consultation</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 Hargreaves & Associates Pty Ltd. All rights reserved. ABN 52 001 234 567</div>
+      <div style="display:flex;gap:24px;">
+        <a href="#" style="color:rgba(247,243,237,0.3);text-decoration:none;">Privacy</a>
+        <a href="#" style="color:rgba(247,243,237,0.3);text-decoration:none;">Terms</a>
+        <a href="#" style="color:rgba(247,243,237,0.3);text-decoration:none;">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Update nav active state
+      const map = { home: 0, why: 1, services: 2, booking: 3 };
+      const links = document.querySelectorAll('nav a');
+      if (map[name] !== undefined) {
+        links[map[name]].classList.add('active');
+      }
+
+      // Close mobile menu
+      document.getElementById('mainNav').classList.remove('open');
+    }
+
+    function toggleMenu() {
+      document.getElementById('mainNav').classList.toggle('open');
+    }
+
+    function submitForm() {
+      const btn = document.querySelector('.form-submit');
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const legalArea = document.getElementById('legalArea').value;
+      const office = document.getElementById('office').value;
+      const prefDate = document.getElementById('prefDate').value;
+      const prefTime = document.getElementById('prefTime').value;
+      const consultType = document.getElementById('consultType').value;
+      const matter = document.getElementById('matter').value.trim();
+
+      if (!firstName) { alert('Please enter your first name.'); return; }
+      if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+      if (!legalArea) { alert('Please select an area of law.'); return; }
+
+      btn.textContent = 'SENDING REQUEST...';
+      btn.disabled = true;
+
+      const payload = {
+        fn: firstName,
+        ln: lastName,
+        em: email,
+        ph: phone,
+        area: legalArea,
+        office: office,
+        date: prefDate,
+        time: prefTime,
+        type: consultType,
+        matter: matter
+      };
+
+      // ⚠️ REPLACE WITH YOUR LAW FIRM APPS SCRIPT URL
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzvLXgoOuO_RLmme5XlPhv7RY_fraBB02dWuHpJPjmUVa5svNA_PPvl_NNZae3b2a5smg/exec';
+
+      if (scriptURL === 'YOUR_LAW_WEBAPP_URL_HERE') {
+        // Simulated success
+        setTimeout(() => {
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+        }, 800);
+        return;
+      }
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      })
+        .then(r => {
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+        })
+        .catch(e => {
+          console.error(e);
+          btn.textContent = 'Request Consultation — Free & Confidential';
+          btn.disabled = false;
+          alert('Connection error. Please try again or call us at (02) 9221 4400.');
+        });
+    }
+
+    // Set min date for date picker
+    const dateInput = document.getElementById('prefDate');
+    if (dateInput) {
+      const today = new Date();
+      today.setDate(today.getDate() + 1);
+      dateInput.min = today.toISOString().split('T')[0];
+    }
+
+    // Scroll shadow on header
+    window.addEventListener('scroll', () => {
+      const h = document.getElementById('mainHeader');
+      h.style.boxShadow = window.scrollY > 20 ? '0 4px 40px rgba(0,0,0,0.3)' : 'none';
+    });
+  </script>
 </body>
+
 </html>
