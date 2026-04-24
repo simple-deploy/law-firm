@@ -1226,6 +1226,44 @@
       }
     }
 
+    /* ── LAPTOP / TABLET ── */
+    @media(max-width: 1024px) {
+      .hero {
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .hero-content {
+        width: 100%;
+        padding-top: 0;
+      }
+
+      .hero-title {
+        max-width: 800px;
+      }
+
+      .hero-stats {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        width: 100%;
+        max-width: 1300px;
+        margin: 60px auto 0;
+        padding: 0 40px;
+        justify-content: flex-start;
+        gap: 40px;
+      }
+
+      .stat {
+        text-align: left;
+      }
+
+      .scroll-line {
+        display: none;
+      }
+    }
+
     /* ── MOBILE ── */
     @media(max-width: 900px) {
       nav {
