@@ -2230,7 +2230,6 @@
     const dateInput = document.getElementById('prefDate');
     if (dateInput) {
       const today = new Date();
-      today.setDate(today.getDate() + 1);
       dateInput.min = today.toISOString().split('T')[0];
     }
 
